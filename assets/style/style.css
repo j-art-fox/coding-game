@@ -1,0 +1,44 @@
+* {
+    /* background-color:white; */
+};
+
+p {
+    color: grey;
+};
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h1{
+
+}
+
+.game-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
+    height: 800px;
+    width: 1000px;
+};
+
+.possible-answer{
+    
+};
+
+#directions-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+};
+
+#possible-answers{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+};
