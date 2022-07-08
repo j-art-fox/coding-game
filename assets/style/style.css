@@ -1,44 +1,75 @@
 * {
     /* background-color:white; */
-};
+}
 
 p {
     color: grey;
-};
-
-body{
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-h1{
 
+button{
+    background-color: white;
+    border:gold 1px solid;
+    padding: 8px;
+    box-shadow: ;
+    border-radius:5px;
+    font-weight: bold;
+    color: rgb(83, 83, 83);
 }
+
+button:hover{
+    transition:ease-in-out 200ms;
+    background-color: gold;
+    color:black;
+    box-shadow: 0px 5px 5px rgb(237, 237, 237);
+}
+
+body {}
+
+h1 {}
 
 .game-card {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     background-color: white;
-    height: 800px;
-    width: 1000px;
-};
+    height: 500px;
+    width: 500px;
+    box-shadow: 0px 5px 5px rgb(237, 237, 237);
+}
 
-.possible-answer{
-    
-};
 
-#directions-container{
+.possible-answer {}
+
+
+.start-quiz {
+    border: solid 2px rgb(221, 221, 221);
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-};
+    height: 500px;
+    width: 500px;
+    box-shadow: 0px 5px 5px rgb(237, 237, 237);
+}
 
-#possible-answers{
+
+#start-button{
+    transform:scale(200%);
+}
+
+#directions-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+#possible-answers {
     display: flex;
     align-items: center;
     justify-content: center;
 
-};
+}
