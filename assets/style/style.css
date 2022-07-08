@@ -24,9 +24,15 @@ button:hover{
     box-shadow: 0px 5px 5px rgb(237, 237, 237);
 }
 
-body {}
+body {
+    display:flex;
+    align-items: center;
+    justify-items: center;
+}
 
-h1 {}
+h2 {
+    color:grey;
+}
 
 .game-card {
     display: none;
@@ -37,13 +43,23 @@ h1 {}
     height: 500px;
     width: 500px;
     box-shadow: 0px 5px 5px rgb(237, 237, 237);
+    margin:60px auto;
 }
 
+.card-header{
+    margin: 0px 8px;
+    align-self: stretch;
+    justify-self: flex-start;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    flex-direction: row;
+}
 
 .possible-answer {}
 
 
-.start-quiz {
+.start-window {
     border: solid 2px rgb(221, 221, 221);
     border-radius: 15px;
     display: flex;
@@ -63,13 +79,15 @@ h1 {}
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 
 
 #possible-answers {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    flex-direction: column;
 
 }
