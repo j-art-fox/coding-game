@@ -16,4 +16,4 @@ In the spirit of making learning web development a fun and enjoyable process, th
 * **Application** This project provided the opportunity to experience appending elements in javascript, storing objects locally on the browser, appending content to create a list, and so much more. 
 
 ## URL
-Website: https://j-art-fox.github.io/This-is-my-portfolio/
+Website: https://j-art-fox.github.io/coding-game/
