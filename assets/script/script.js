@@ -1,7 +1,7 @@
 var questions = [
     {
         question: "Select the correct syntax for calling an external javascript file.",
-        answers: [{ value: "true", text: '"<script type="text/javascript" src="javascript.js"> </script>"' }, { value: "false", text: "bacon" }, { value: "false", text: "cheese" }, { value: "false", text: "lettuce" }],
+        answers: [{ value: "true", text: '<script type="text/javascript" src="javascript.js"> </script>' }, { value: "false", text: "bacon" }, { value: "false", text: "cheese" }, { value: "false", text: "lettuce" }],
         solution: '<script type="text/javascript" src="javascript.js"> </script>'
     },
     {
@@ -16,7 +16,7 @@ var questions = [
     },
     {
         question: "Select the correct definition of CSS",
-        answers: [{ value: "false", text: "computer selection service"}, { value: "false", text: "can't sleep soundly" }, { value: "false", text: "camera shutters suck" }, { value: "true", text: "cascading styling sheets" }],
+        answers: [{ value: "false", text: "computer selection service" }, { value: "false", text: "can't sleep soundly" }, { value: "false", text: "camera shutters suck" }, { value: "true", text: "cascading styling sheets" }],
         solution: 'cascading styling sheets'
     },
     {
@@ -58,18 +58,18 @@ var timeEl = document.querySelector(".timer");
 var timeLeft = questions.length * 15;
 var startWindowEl = document.querySelector(".start-window");
 var questContEl = document.getElementById("quest-cont");
-var shuffledQuestions, currentQuestionIndex;
-
+var shuffledQuestions;
+var currentQuestionIndex = 0;
+var scoreEl = document.getElementById("score");
+var currentScoreEl = 0;
 
 function startQuiz() {
     startWindowEl.setAttribute("style", "display:none;");
     gameCardCont.setAttribute("style", "display:flex;");
-    shuffledQuestions = questions.sort(() => Math.random() - .5);
-    currentQuestionIndex = 0;
     setTime();
+    shuffledQuestions = questions.sort(() => Math.random() - .5);
     setNextQuestion();
-    setNextSolutions();
-    console.log("bacon");
+    setNextSolutions(event);
 };
 
 startQuizBtn.addEventListener("click", startQuiz);
@@ -79,50 +79,72 @@ function setTime() {
         timeLeft--;
         timeEl.textContent = timeLeft + " seconds remaining";
 
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
+            timeLeft = 0;
             clearInterval(timerInterval);
-            sendMessage();
+            endGame();
             console.log("time has hit 0.");
         }
     }, 1000)
-}
+};
 
 function sendMessage() {
     timeEl.textContent = "Game Over";
-}
+};
+
+function addToScore() {
+    console.log("check");
+    currentScoreEl = currentScoreEl + 15;
+    scoreEl.textContent = currentScoreEl;
+};
 
 var potentAnsEl1 = document.getElementById("q1cont");
 var potentAnsEl2 = document.getElementById("q2cont");
 var potentAnsEl3 = document.getElementById("q3cont");
 var potentAnsEl4 = document.getElementById("q4cont");
 
+// function addTimeLeft() {
+//     timeLeft += 15;
+// }
+
 function setNextSolutions(event) {
     //event.target is the current button that was clicked or pressed
-    if (this.textContent === questions[currentQuestionIndex].solution){
-        alert("correct");
-    } else{
-        alert ("incorrect");
-    }
-    ;
-    currentQuestionIndex++;
-    setNextQuestion();
-    showQuestion(shuffledQuestions[currentQuestionIndex]);
+    //this is like the same but more reliable
+    var target = event.target;
+    console.log(target);
 
+    if (target.textContent === questions[currentQuestionIndex].solution) {
+        // addTimeLeft();
+        console.log("correct");
+        currentQuestionIndex++;
+        setNextQuestion();
+        showQuestionNum(shuffledQuestions[currentQuestionIndex]);
+        addToScore();
+    } else {
+        console.log("wrong");
+        currentQuestionIndex++;
+        setNextQuestion();
+        showQuestionNum(shuffledQuestions[currentQuestionIndex]);
+
+
+    };
 };
 
-function showQuestion() {
+
+
+function showQuestionNum() {
     //shows the question counter
     var questNum = document.getElementById("quest-remaining-value");
     questNum.textContent = currentQuestionIndex;
 };
 
 function setNextQuestion() {
-     questContEl.textContent = questions[currentQuestionIndex].question;
-     potentAnsEl1.textContent = questions[currentQuestionIndex].answers[0].text;
-     potentAnsEl2.textContent = questions[currentQuestionIndex].answers[1].text;
-     potentAnsEl3.textContent = questions[currentQuestionIndex].answers[2].text;
-     potentAnsEl4.textContent = questions[currentQuestionIndex].answers[3].text;
-     
+    questContEl.textContent = questions[currentQuestionIndex].question;
+    potentAnsEl1.textContent = questions[currentQuestionIndex].answers[0].text;
+    potentAnsEl2.textContent = questions[currentQuestionIndex].answers[1].text;
+    potentAnsEl3.textContent = questions[currentQuestionIndex].answers[2].text;
+    potentAnsEl4.textContent = questions[currentQuestionIndex].answers[3].text;
+
 };
 
 potentAnsEl1.addEventListener("click", setNextSolutions);
@@ -130,4 +152,29 @@ potentAnsEl2.addEventListener("click", setNextSolutions);
 potentAnsEl3.addEventListener("click", setNextSolutions);
 potentAnsEl4.addEventListener("click", setNextSolutions);
 
+endWinEl = document.querySelector(".end-window");
+restartEl = document.getElementById("restart-button");
+restartEl.addEventListener("click", restart);
+finalScoreEl = document.getElementById("final-score");
+var highScores = JSON.parse(localStorage.getItem("highScore"));
 
+function endGame() {
+    endWinEl.setAttribute("style", "display:flex;");
+    gameCardCont.setAttribute("style", "display:none;");
+    localStorage.setItem("highScore", JSON.stringify([timeLeft]));
+    finalScoreEl.textContent = localStorage.getItem("highscore");
+
+};
+
+function restart() {
+    window.location.href = window.location.href;
+};
+
+
+//QUESTIONS I HAVE:
+//Whether the questions is right or wrong, my timer keeps droping time. How can I mend this?
+//My index starts from zero, but stops at 9 instead of 10. I tried adding 1 to the end, but get an unexpected result. How can I fix this?
+//
+
+//todo:
+//rewrite ids for buttons inside of the button and not the span.

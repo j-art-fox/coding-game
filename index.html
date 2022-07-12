@@ -13,12 +13,18 @@
     <div class="start-window">
         <button id="start-button">START</button>
     </div>
+    <form class="end-window">
+        <h1>GAME OVER</h1>
+        <ol class="high-scores">
+            <li class="high-score"><p><span id="player name">No Scores Saved </span> | <span id="final-score">###</span></p></li>
+        </ol>
+        <label for="player-name"><input type="text" style="text-align: center;" placeholder="INSERT NAME HERE" id="player-name-input"></label>
+        <button id="submit-button">SUBMIT</button>
+        <button id="restart-button">PLAY AGAIN</button>
+    </form>
+    
     <div class="game-card">
-        <div class="card-header">
-            <div id="quiz-nav">
-                <button id="bk-btn">⇦ back</button>
-                <button id="fwd-btn">next ⇨</button>
-            </div>        
+        <div class="card-header">   
             <div>
                 <h2 class="timer"></h2>
             </div>
@@ -31,10 +37,10 @@
             <p id="quest-cont">Question content.</p>
         </div>
         <div id="possible-answers">
-            <button class="possible-answer">1: <span id="q1cont">possible answer</span></button>
-            <button class="possible-answer">2: <span id="q2cont">possible answer</span></button>
-            <button class="possible-answer">3: <span id="q3cont">possible answer</span></button>
-            <button class="possible-answer">4: <span id="q4cont">possible answer</span></button>
+            <button id="btn-1" class="possible-answer">1: <span id="q1cont">possible answer</span></button>
+            <button id="btn-2" class="possible-answer">2: <span id="q2cont">possible answer</span></button>
+            <button id="btn-3" class="possible-answer">3: <span id="q3cont">possible answer</span></button>
+            <button id="btn-4" class="possible-answer">4: <span id="q4cont">possible answer</span></button>
         </div>
     </div>
 
