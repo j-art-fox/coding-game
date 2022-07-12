@@ -11,7 +11,7 @@ var questions = [
     },
     {
         question: "Select the correct definition of HTML",
-        answers: [{ value: "false", text: "hicks think me lazy" }, { value: "false", text: "hyper ticklish mamalian litters" }, { value: "true", text: "Hypertext Markup Language" }, { value: "false", text: "hello there my love" }],
+        answers: [{ value: "false", text: "hicks think me lazy" }, { value: "false", text: "hyper ticklish male lemers" }, { value: "true", text: "Hypertext Markup Language" }, { value: "false", text: "hello there my love" }],
         solution: 'Hypertext Markup Language'
     },
     {
@@ -55,7 +55,7 @@ var questions = [
 var startQuizBtn = document.querySelector("#start-button");
 var gameCardCont = document.querySelector(".game-card");
 var timeEl = document.querySelector(".timer");
-var timeLeft = questions.length * 15;
+var timeLeft = questions.length * 2;
 var startWindowEl = document.querySelector(".start-window");
 var questContEl = document.getElementById("quest-cont");
 var shuffledQuestions;
@@ -168,6 +168,29 @@ var nameInput = document.getElementById("player-name-input");
 var submitBtnEl = document.getElementById("submit-button");
 
 
+submitBtnEl.addEventListener("click", function (event) {
+    event.preventDefault();
+    console.log("submit button has been pushed.")
+    var savedUser = nameInput.value.trim();
+    if (savedUser === ""){
+        return;
+    }
+   
+    scores.push(savedUser+ " | SCORE: "+currentScore);
+    nameInput.value = "";
+   
+    saveScore();
+    renderHighScores();
+    hideSubmit();
+});    
+
+function hideSubmit(){
+ submitBtnEl.setAttribute("style","display:none;");
+ nameInput.setAttribute("style","display:none;")
+
+};
+
+
 function renderHighScores() {
     highScoresList.innerHTML = "";
     
@@ -199,20 +222,7 @@ function saveScore() {
     localStorage.setItem('scores', JSON.stringify(scores))
 };
 
-submitBtnEl.addEventListener("click", function (event) {
-    event.preventDefault();
-    saveScore();
-
-    var highScoreText = submitBtnEl.value.trim();
-    if (highScoreText === ""){
-        return;
-    }
-    scores.push(highScoreText);
-    submitBtnEl.value = "";
-   
-    saveScore();
-    renderHighScores();
-});    
+init();
 
 //--------------------restart game----------------------------------//
 restartEl = document.getElementById("restart-button");
