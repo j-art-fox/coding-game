@@ -60,7 +60,6 @@ var startWindowEl = document.querySelector(".start-window");
 var questContEl = document.getElementById("quest-cont");
 var shuffledQuestions;
 var currentQuestionIndex = 0;
-var scoreEl = document.getElementById("score");
 var currentScore = 0;
 
 function startQuiz() {
@@ -119,13 +118,13 @@ function setNextSolutions(event) {
         console.log("wrong");
         minusTimeLeft();
     }
-    if (currentQuestionIndex === questions.length -1){
+    if (currentQuestionIndex === questions.length - 1) {
         endGame();
     } else {
         currentQuestionIndex++;
         setNextQuestion();
         showQuestionNum(shuffledQuestions[currentQuestionIndex]);
-    } 
+    }
 };
 
 
@@ -142,7 +141,7 @@ function setNextQuestion() {
     potentAnsEl2.textContent = questions[currentQuestionIndex].answers[1].text;
     potentAnsEl3.textContent = questions[currentQuestionIndex].answers[2].text;
     potentAnsEl4.textContent = questions[currentQuestionIndex].answers[3].text;
-
+    
 };
 
 potentAnsEl1.addEventListener("click", setNextSolutions);
@@ -150,49 +149,75 @@ potentAnsEl2.addEventListener("click", setNextSolutions);
 potentAnsEl3.addEventListener("click", setNextSolutions);
 potentAnsEl4.addEventListener("click", setNextSolutions);
 
-endWinEl = document.querySelector(".end-window");
-restartEl = document.getElementById("restart-button");
-restartEl.addEventListener("click", restart);
-finalScoreEl = document.getElementById("final-score");
-var highScores = JSON.parse(localStorage.getItem("highScore"));
+///-----------------------------SAVING SCORES----------------------------//
+var scores = [];
 
 function endGame() {
+    var finalScoreEl = document.getElementById("final-score");
     endWinEl.setAttribute("style", "display:flex;");
     gameCardCont.setAttribute("style", "display:none;");
     finalScoreEl.textContent = currentScore;
     
 };
-submitBtnEl = document.getElementById("submit-button");
+
+var scoreEl = document.getElementById("score");
+var endWinEl = document.querySelector(".end-window");
+var playerName = document.getElementById("player-name");
+var highScoresList = document.getElementById("high-scores");
+var nameInput = document.getElementById("player-name-input");
+var submitBtnEl = document.getElementById("submit-button");
 
 
-submitBtnEl.addEventListener("click",function(event){
+function renderHighScores() {
+    highScoresList.innerHTML = "";
+    
+    for (let i = 0; i < scores.length; i++) {
+        var highScore = scores[i];
+        
+        var li = document.createElement("li");
+        li.textContent = highScore;
+        li.setAttribute("data-index", i);
+        
+        highScoresList.appendChild(li);
+    }
+};
+
+function init() {
+    var storedHighScores = JSON.parse(localStorage.getItem('scores'));
+    if (storedHighScores !== null) {
+        scores = storedHighScores;
+    }
+    renderHighScores();
+}
+
+function saveScore() {
+    if (scores === null) {
+        scores = {}
+    }
+    
+    scores[nameInput] = currentScore;
+    localStorage.setItem('scores', JSON.stringify(scores))
+};
+
+submitBtnEl.addEventListener("click", function (event) {
     event.preventDefault();
     saveScore();
 
-})    
-
-function saveScore(){
-    var highScoreName = document.getElementById("player-name-input").value;
-    var scores = JSON.parse(localStorage.getItem('scores'))
-    if(scores === null){
-        scores = {}
+    var highScoreText = submitBtnEl.value.trim();
+    if (highScoreText === ""){
+        return;
     }
+    scores.push(highScoreText);
+    submitBtnEl.value = "";
+   
+    saveScore();
+    renderHighScores();
+});    
 
-    scores[highScoreName] = currentScore;
-
-    localStorage.setItem('scores', JSON.stringify(scores))
-
-};
+//--------------------restart game----------------------------------//
+restartEl = document.getElementById("restart-button");
+restartEl.addEventListener("click", restart);
 
 function restart() {
     window.location.href = window.location.href;
 };
-
-
-//QUESTIONS I HAVE:
-//Whether the questions is right or wrong, my timer keeps droping time. How can I mend this?
-//My index starts from zero, but stops at 9 instead of 10. I tried adding 1 to the end, but get an unexpected result. How can I fix this?
-//
-
-//todo:
-//rewrite ids for buttons inside of the button and not the span.
