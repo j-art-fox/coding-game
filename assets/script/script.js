@@ -61,7 +61,7 @@ var questContEl = document.getElementById("quest-cont");
 var shuffledQuestions;
 var currentQuestionIndex = 0;
 var scoreEl = document.getElementById("score");
-var currentScoreEl = 0;
+var currentScore = 0;
 
 function startQuiz() {
     startWindowEl.setAttribute("style", "display:none;");
@@ -69,7 +69,7 @@ function startQuiz() {
     setTime();
     shuffledQuestions = questions.sort(() => Math.random() - .5);
     setNextQuestion();
-    setNextSolutions(event);
+    showQuestionNum(shuffledQuestions[currentQuestionIndex]);
 };
 
 startQuizBtn.addEventListener("click", startQuiz);
@@ -78,7 +78,6 @@ function setTime() {
     var timerInterval = setInterval(function () {
         timeLeft--;
         timeEl.textContent = timeLeft + " seconds remaining";
-
         if (timeLeft <= 0) {
             timeLeft = 0;
             clearInterval(timerInterval);
@@ -94,8 +93,8 @@ function sendMessage() {
 
 function addToScore() {
     console.log("check");
-    currentScoreEl = currentScoreEl + 15;
-    scoreEl.textContent = currentScoreEl;
+    currentScore = currentScore + 15;
+    scoreEl.textContent = currentScore;
 };
 
 var potentAnsEl1 = document.getElementById("q1cont");
@@ -103,31 +102,30 @@ var potentAnsEl2 = document.getElementById("q2cont");
 var potentAnsEl3 = document.getElementById("q3cont");
 var potentAnsEl4 = document.getElementById("q4cont");
 
-// function addTimeLeft() {
-//     timeLeft += 15;
-// }
+function minusTimeLeft() {
+    timeLeft -= 15;
+    timeLeft = timeLeft < 0 ? 0 : timeLeft;
+}
 
 function setNextSolutions(event) {
     //event.target is the current button that was clicked or pressed
     //this is like the same but more reliable
     var target = event.target;
-    console.log(target);
-
     if (target.textContent === questions[currentQuestionIndex].solution) {
         // addTimeLeft();
         console.log("correct");
-        currentQuestionIndex++;
-        setNextQuestion();
-        showQuestionNum(shuffledQuestions[currentQuestionIndex]);
         addToScore();
     } else {
         console.log("wrong");
+        minusTimeLeft();
+    }
+    if (currentQuestionIndex === questions.length -1){
+        endGame();
+    } else {
         currentQuestionIndex++;
         setNextQuestion();
         showQuestionNum(shuffledQuestions[currentQuestionIndex]);
-
-
-    };
+    } 
 };
 
 
@@ -135,7 +133,7 @@ function setNextSolutions(event) {
 function showQuestionNum() {
     //shows the question counter
     var questNum = document.getElementById("quest-remaining-value");
-    questNum.textContent = currentQuestionIndex;
+    questNum.textContent = currentQuestionIndex + 1;
 };
 
 function setNextQuestion() {
@@ -161,8 +159,28 @@ var highScores = JSON.parse(localStorage.getItem("highScore"));
 function endGame() {
     endWinEl.setAttribute("style", "display:flex;");
     gameCardCont.setAttribute("style", "display:none;");
-    localStorage.setItem("highScore", JSON.stringify([timeLeft]));
-    finalScoreEl.textContent = localStorage.getItem("highscore");
+    finalScoreEl.textContent = currentScore;
+    
+};
+submitBtnEl = document.getElementById("submit-button");
+
+
+submitBtnEl.addEventListener("click",function(event){
+    event.preventDefault();
+    saveScore();
+
+})    
+
+function saveScore(){
+    var highScoreName = document.getElementById("player-name-input").value;
+    var scores = JSON.parse(localStorage.getItem('scores'))
+    if(scores === null){
+        scores = {}
+    }
+
+    scores[highScoreName] = currentScore;
+
+    localStorage.setItem('scores', JSON.stringify(scores))
 
 };
 
