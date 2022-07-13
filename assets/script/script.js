@@ -55,7 +55,7 @@ var questions = [
 var startQuizBtn = document.querySelector("#start-button");
 var gameCardCont = document.querySelector(".game-card");
 var timeEl = document.querySelector(".timer");
-var timeLeft = questions.length * 2;
+var timeLeft = questions.length * 15;
 var startWindowEl = document.querySelector(".start-window");
 var questContEl = document.getElementById("quest-cont");
 var shuffledQuestions;
