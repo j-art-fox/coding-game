@@ -106,6 +106,9 @@ function minusTimeLeft() {
     timeLeft = timeLeft < 0 ? 0 : timeLeft;
 }
 
+var correctEl = document.getElementById("correct");
+var incorrectEl = document.getElementById("incorrect");
+
 function setNextSolutions(event) {
     //event.target is the current button that was clicked or pressed
     //this is like the same but more reliable
@@ -113,10 +116,14 @@ function setNextSolutions(event) {
     if (target.textContent === questions[currentQuestionIndex].solution) {
         // addTimeLeft();
         console.log("correct");
+        incorrectEl.setAttribute("style", "display:none;")
+        correctEl.setAttribute("style", "display:flex;");
         addToScore();
     } else {
         console.log("wrong");
         minusTimeLeft();
+        correctEl.setAttribute("style", "display:none;");
+        incorrectEl.setAttribute("style", "display:flex;")
     }
     if (currentQuestionIndex === questions.length - 1) {
         endGame();
@@ -141,6 +148,7 @@ function setNextQuestion() {
     potentAnsEl2.textContent = questions[currentQuestionIndex].answers[1].text;
     potentAnsEl3.textContent = questions[currentQuestionIndex].answers[2].text;
     potentAnsEl4.textContent = questions[currentQuestionIndex].answers[3].text;
+    // correctEl.setAttribute("style","display:none");
     
 };
 
